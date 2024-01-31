@@ -40,7 +40,13 @@ class _ListTaskScreen extends State<ListTaskScreen> {
                                       child: ListTile(
                                           leading: const CircleAvatar(child: Text('P')),
                                           title: Text(tasks.characterByIndex(index).title),
-                                          subtitle: Text(tasks.characterByIndex(index).time),
+                                          subtitle: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(tasks.characterByIndex(index).date),
+                                              Text(tasks.characterByIndex(index).time),
+                                            ],
+                                          ),
                                           trailing: IconButton(
                                               onPressed: () => showDialog(
                                                   context: context,

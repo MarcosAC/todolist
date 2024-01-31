@@ -14,12 +14,11 @@ class TaskProvider with ChangeNotifier {
   Future<void> loadTasks() async {
     final listTask = await DataBaseUtils.getAll('tasks');
 
-    print(listTask.toString());
-
     _tasks = listTask
         .map((task) => Task(
               id: task['id'],
               title: task['title'],
+              date: task['date'],
               time: task['time'],
             ))
         .toList();
@@ -34,6 +33,7 @@ class TaskProvider with ChangeNotifier {
       Task newCharacter = Task(
         id: task.id,
         title: task.title,
+        date: task.date,
         time: task.time,
       );
 
@@ -51,6 +51,7 @@ class TaskProvider with ChangeNotifier {
         .map((task) => Task(
               id: task['id'],
               title: task['title'],
+              date: task['date'],
               time: task['time'],
             ))
         .toList();
@@ -66,7 +67,12 @@ class TaskProvider with ChangeNotifier {
     Task? newTask;
 
     for (var task in _tasks) {
-      newTask = Task(id: task.id, title: task.title, time: task.time);
+      newTask = Task(
+        id: task.id,
+        title: task.title,
+        date: task.date,
+        time: task.time,
+      );
     }
 
     return newTask;
