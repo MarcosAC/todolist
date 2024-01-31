@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:todolist/models/task.dart';
 import 'package:todolist/utils/database/database_utils.dart';
@@ -12,6 +13,8 @@ class TaskProvider with ChangeNotifier {
 
   Future<void> loadTasks() async {
     final listTask = await DataBaseUtils.getAll('tasks');
+
+    print(listTask.toString());
 
     _tasks = listTask
         .map((task) => Task(

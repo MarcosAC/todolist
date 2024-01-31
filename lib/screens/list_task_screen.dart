@@ -25,64 +25,68 @@ class _ListTaskScreen extends State<ListTaskScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FutureBuilder(
-              future: Provider.of<TaskProvider>(context, listen: false).loadTasks(),
-              builder: (context, snapshot) => snapshot.connectionState == ConnectionState.waiting
-                  ? const Center(child: CircularProgressIndicator())
-                  : Consumer<TaskProvider>(
-                      builder: (context, tasks, child) => tasks.itemsCount == 0
-                          ? child!
-                          : ListView.builder(
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Card(
-                                    child: ListTile(
-                                        leading: const CircleAvatar(child: Text('P')),
-                                        title: Text(tasks.characterByIndex(index).title),
-                                        subtitle: Text(tasks.characterByIndex(index).time),
-                                        trailing: IconButton(
-                                            onPressed: () => showDialog(
-                                                context: context,
-                                                builder: (BuildContext contex) => AlertDialog(
-                                                        title: const Text('Excluir Tarefa'),
-                                                        content: const Text('Deseja mesmo excluir Tarefa?'),
-                                                        actions: [
-                                                          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
-                                                          TextButton(
-                                                              onPressed: () {
-                                                                try {
-                                                                  tasks.delete(tasks.characterByIndex(index).id!);
-                                                                  Navigator.pop(context);
-                                                                  showDialog(
-                                                                      context: context,
-                                                                      builder: (BuildContext context) => AlertDialog(
-                                                                              title: const Text('Sucesso! :D'),
-                                                                              content: const Text('Tarefa deletada com sucesso. :)'),
-                                                                              actions: [
-                                                                                TextButton(
-                                                                                    onPressed: () => Navigator.pop(context), child: const Text('Ok')),
-                                                                              ]));
-                                                                } catch (e) {
-                                                                  showDialog(
-                                                                      context: context,
-                                                                      builder: (BuildContext context) => AlertDialog(
-                                                                              title: const Text('Erro! :X'),
-                                                                              content: const Text('Erro ao deletar tarefa. :('),
-                                                                              actions: [
-                                                                                TextButton(
-                                                                                    onPressed: () => Navigator.pop(context), child: const Text('Ok')),
-                                                                              ]));
-                                                                }
-                                                              },
-                                                              child: const Text('Ok'))
-                                                        ])),
-                                            icon: const Icon(Icons.delete_forever_outlined, color: Colors.black)),
-                                        onTap: () =>
-                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => const TaskFormScreen())))));
-                              },
-                              itemCount: tasks.itemsCount,
-                            ),
-                      child: const Center(child: Text('Lista de tarefas vazia!')))),
+          Expanded(
+            child: FutureBuilder(
+                future: Provider.of<TaskProvider>(context, listen: false).loadTasks(),
+                builder: (context, snapshot) => snapshot.connectionState == ConnectionState.waiting
+                    ? const Center(child: CircularProgressIndicator())
+                    : Consumer<TaskProvider>(
+                        builder: (context, tasks, child) => tasks.itemsCount == 0
+                            ? child!
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Card(
+                                      child: ListTile(
+                                          leading: const CircleAvatar(child: Text('P')),
+                                          title: Text(tasks.characterByIndex(index).title),
+                                          subtitle: Text(tasks.characterByIndex(index).time),
+                                          trailing: IconButton(
+                                              onPressed: () => showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext contex) => AlertDialog(
+                                                          title: const Text('Excluir Tarefa'),
+                                                          content: const Text('Deseja mesmo excluir Tarefa?'),
+                                                          actions: [
+                                                            TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
+                                                            TextButton(
+                                                                onPressed: () {
+                                                                  try {
+                                                                    tasks.delete(tasks.characterByIndex(index).id!);
+                                                                    Navigator.pop(context);
+                                                                    showDialog(
+                                                                        context: context,
+                                                                        builder: (BuildContext context) => AlertDialog(
+                                                                                title: const Text('Sucesso! :D'),
+                                                                                content: const Text('Tarefa deletada com sucesso. :)'),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                      onPressed: () => Navigator.pop(context),
+                                                                                      child: const Text('Ok')),
+                                                                                ]));
+                                                                  } catch (e) {
+                                                                    showDialog(
+                                                                        context: context,
+                                                                        builder: (BuildContext context) => AlertDialog(
+                                                                                title: const Text('Erro! :X'),
+                                                                                content: const Text('Erro ao deletar tarefa. :('),
+                                                                                actions: [
+                                                                                  TextButton(
+                                                                                      onPressed: () => Navigator.pop(context),
+                                                                                      child: const Text('Ok')),
+                                                                                ]));
+                                                                  }
+                                                                },
+                                                                child: const Text('Ok'))
+                                                          ])),
+                                              icon: const Icon(Icons.delete_forever_outlined, color: Colors.black)),
+                                          onTap: () =>
+                                              Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => const TaskFormScreen())))));
+                                },
+                                itemCount: tasks.itemsCount,
+                              ),
+                        child: const Center(child: Text('Lista de tarefas vazia!')))),
+          ),
         ],
       ),
     );
