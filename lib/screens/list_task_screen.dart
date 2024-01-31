@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/provider/task_provider.dart';
 import 'package:todolist/screens/task_form_screen.dart';
+import 'package:todolist/utils/routes/app_routes.dart';
 
 class ListTaskScreen extends StatefulWidget {
   const ListTaskScreen({super.key});
@@ -17,7 +18,7 @@ class _ListTaskScreen extends State<ListTaskScreen> {
       appBar: AppBar(title: const Text('Lista de Tarefas'), titleTextStyle: const TextStyle(fontSize: 17), actions: [
         IconButton(
             onPressed: () {
-              //Navigator.of(context).popAndPushNamed(AppRoutes.characterSheetScreen);
+              Navigator.of(context).popAndPushNamed(AppRoutes.taskFormScreen);
             },
             icon: const Icon(Icons.add))
       ]),

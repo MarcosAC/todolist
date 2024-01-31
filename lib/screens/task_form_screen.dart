@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/models/task.dart';
 import 'package:todolist/provider/task_provider.dart';
+import 'package:todolist/utils/routes/app_routes.dart';
 
 class TaskFormScreen extends StatefulWidget {
   const TaskFormScreen({super.key});
@@ -27,7 +28,11 @@ class _TaskFormScreen extends State<TaskFormScreen> {
                 Provider.of<TaskProvider>(context, listen: false).addTask(newTask);
               },
               icon: const Icon(Icons.save)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.list)),
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).popAndPushNamed(AppRoutes.listTaskScreen);
+              },
+              icon: const Icon(Icons.list)),
         ],
       ),
       body: const Padding(padding: EdgeInsets.all(8.0)),
