@@ -3,6 +3,7 @@ import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/models/task.dart';
 import 'package:todolist/provider/task_provider.dart';
+import 'package:todolist/services/weather_service.dart';
 import 'package:todolist/utils/routes/app_routes.dart';
 
 class TaskFormScreen extends StatefulWidget {
@@ -15,9 +16,11 @@ class TaskFormScreen extends StatefulWidget {
 }
 
 class _TaskFormScreen extends State<TaskFormScreen> {
+  final WeatherService _weatherService = WeatherService(apiKey: "de8f1c2567a1f497d34639f0a85443c2");
+  
   final _titleController = TextEditingController();
-  final _dateController = MaskedTextController(mask: '00/00/0000');
-  final _timeController = MaskedTextController(mask: '00:00');
+  final _dateController = MaskedTextController(mask: "00/00/0000");
+  final _timeController = MaskedTextController(mask: "00:00");
 
   bool isEdit = false;
 
