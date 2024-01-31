@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/provider/task_provider.dart';
-import 'package:todolist/screens/task_form.dart';
+import 'package:todolist/screens/task_form_screen.dart';
 
-class ListTask extends StatefulWidget {
-  const ListTask({super.key});
+class ListTaskScreen extends StatefulWidget {
+  const ListTaskScreen({super.key});
 
   @override
-  State<ListTask> createState() => _ListTaskState();
+  State<ListTaskScreen> createState() => _ListTaskScreen();
 }
 
-class _ListTaskState extends State<ListTask> {
+class _ListTaskScreen extends State<ListTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +77,7 @@ class _ListTaskState extends State<ListTask> {
                                                         ])),
                                             icon: const Icon(Icons.delete_forever_outlined, color: Colors.black)),
                                         onTap: () =>
-                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => const TaskForm())))));
+                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => const TaskFormScreen())))));
                               },
                               itemCount: tasks.itemsCount,
                             ),

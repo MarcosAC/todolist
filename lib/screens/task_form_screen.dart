@@ -3,14 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:todolist/models/task.dart';
 import 'package:todolist/provider/task_provider.dart';
 
-class TaskForm extends StatefulWidget {
-  const TaskForm({super.key});
+class TaskFormScreen extends StatefulWidget {
+  const TaskFormScreen({super.key});
 
   @override
-  State<TaskForm> createState() => _TaskFormState();
+  State<TaskFormScreen> createState() => _TaskFormScreen();
 }
 
-class _TaskFormState extends State<TaskForm> {
+class _TaskFormScreen extends State<TaskFormScreen> {
   final _titleController = TextEditingController();
   final _timeController = TextEditingController();
 
