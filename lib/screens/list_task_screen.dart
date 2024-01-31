@@ -39,12 +39,12 @@ class _ListTaskScreen extends State<ListTaskScreen> {
                                   return Card(
                                       child: ListTile(
                                           leading: const CircleAvatar(child: Text('P')),
-                                          title: Text(tasks.characterByIndex(index).title),
+                                          title: Text(tasks.taskByIndex(index).title),
                                           subtitle: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text(tasks.characterByIndex(index).date),
-                                              Text(tasks.characterByIndex(index).time),
+                                              Text(tasks.taskByIndex(index).date),
+                                              Text(tasks.taskByIndex(index).time),
                                             ],
                                           ),
                                           trailing: IconButton(
@@ -58,7 +58,7 @@ class _ListTaskScreen extends State<ListTaskScreen> {
                                                             TextButton(
                                                                 onPressed: () {
                                                                   try {
-                                                                    tasks.delete(tasks.characterByIndex(index).id!);
+                                                                    tasks.delete(tasks.taskByIndex(index).id!);
                                                                     Navigator.pop(context);
                                                                     showDialog(
                                                                         context: context,
@@ -86,8 +86,11 @@ class _ListTaskScreen extends State<ListTaskScreen> {
                                                                 child: const Text('Ok'))
                                                           ])),
                                               icon: const Icon(Icons.delete_forever_outlined, color: Colors.black)),
-                                          onTap: () =>
-                                              Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => const TaskFormScreen())))));
+                                          onTap: () => Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: ((context) => TaskFormScreen(task: tasks.taskByIndex(index))),
+                                              ))));
                                 },
                                 itemCount: tasks.itemsCount,
                               ),

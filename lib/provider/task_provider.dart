@@ -26,19 +26,19 @@ class TaskProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateCharacter(Task task) async {
+  Future<void> updateTask(Task task) async {
     int index = _tasks.indexWhere((task) => task.id == task.id);
 
     if (index >= 0) {
-      Task newCharacter = Task(
+      Task newTask = Task(
         id: task.id,
         title: task.title,
         date: task.date,
         time: task.time,
       );
 
-      DataBaseUtils.update('tasks', newCharacter);
-      _tasks[index] = newCharacter;
+      DataBaseUtils.update('tasks', newTask);
+      _tasks[index] = newTask;
       notifyListeners();
     }
   }
@@ -58,7 +58,7 @@ class TaskProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Task characterByIndex(int index) {
+  Task taskByIndex(int index) {
     return _tasks[index];
   }
 

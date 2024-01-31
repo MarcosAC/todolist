@@ -6,7 +6,9 @@ import 'package:todolist/provider/task_provider.dart';
 import 'package:todolist/utils/routes/app_routes.dart';
 
 class TaskFormScreen extends StatefulWidget {
-  const TaskFormScreen({super.key});
+  const TaskFormScreen({super.key, this.task});
+
+  final Task? task;
 
   @override
   State<TaskFormScreen> createState() => _TaskFormScreen();
@@ -17,8 +19,20 @@ class _TaskFormScreen extends State<TaskFormScreen> {
   final _dateController = MaskedTextController(mask: '00/00/0000');
   final _timeController = MaskedTextController(mask: '00:00');
 
+  bool isEdit = false;
+
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      if (widget.task != null) {
+        isEdit = true;
+
+        _titleController.text = widget.task!.title;
+        _dateController.text = widget.task!.date;
+        _timeController.text = widget.task!.time;
+      } // else {}
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Adicionar Tarefa"),
@@ -30,11 +44,69 @@ class _TaskFormScreen extends State<TaskFormScreen> {
                 // TimeOfDay time = TimeOfDay.fromDateTime(DateFormat('HH:mm').parse(_timeController.text));
 
                 Task newTask = Task(
+                  id: widget.task?.id,
                   title: _titleController.text,
                   date: _dateController.text,
                   time: _timeController.text,
                 );
-                Provider.of<TaskProvider>(context, listen: false).addTask(newTask);
+
+                if (isEdit) {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          AlertDialog(title: const Text('Editar Tarefa'), content: const Text('Deseja editar tarefa?'), actions: [
+                            TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
+                            TextButton(
+                                onPressed: () {
+                                  try {
+                                    Provider.of<TaskProvider>(context, listen: false).updateTask(newTask);
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) => AlertDialog(
+                                                title: const Text('Sucesso! :D'),
+                                                content: const Text('Tarefa editada com sucesso. :)'),
+                                                actions: [
+                                                  TextButton(
+                                                      onPressed: () => Navigator.of(context)
+                                                          .pushNamedAndRemoveUntil(AppRoutes.listTaskScreen, (Route<dynamic> route) => false),
+                                                      child: const Text('Ok')),
+                                                ]));
+                                  } catch (e) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(title: const Text('Erro! :X'), content: const Text('Erro ao editar tarefa. :('), actions: [
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop(AppRoutes.listTaskScreen);
+                                                  },
+                                                  child: const Text('Ok'))
+                                            ]));
+                                  }
+                                },
+                                child: const Text('Ok'))
+                          ]));
+                } else {
+                  try {
+                    Provider.of<TaskProvider>(context, listen: false).addTask(newTask);
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            AlertDialog(title: const Text('Sucesso! :D'), content: const Text('Tarefa salva com sucesso. :)'), actions: [
+                              TextButton(
+                                  onPressed: () =>
+                                      Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.listTaskScreen, (Route<dynamic> route) => false),
+                                  child: const Text('Ok')),
+                            ]));
+                  } catch (e) {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            AlertDialog(title: const Text('Erro! :X'), content: const Text('Erro ao salvar taare. :('), actions: [
+                              TextButton(onPressed: () => Navigator.pop(context), child: const Text('Ok')),
+                            ]));
+                  }
+                }
               },
               icon: const Icon(Icons.save)),
           IconButton(
