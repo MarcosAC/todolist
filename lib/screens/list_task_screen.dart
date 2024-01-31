@@ -22,6 +22,7 @@ class _ListTaskState extends State<ListTask> {
             icon: const Icon(Icons.add))
       ]),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FutureBuilder(
               future: Provider.of<TaskProvider>(context, listen: false).loadTasks(),

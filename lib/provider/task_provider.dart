@@ -5,7 +5,7 @@ import 'package:todolist/utils/database/database_utils.dart';
 class TaskProvider with ChangeNotifier {
   List<Task> _tasks = [];
 
-  Future<void> addCharacter(Task task) async {
+  Future<void> addTask(Task task) async {
     DataBaseUtils.insert('tasks', task.toMap());
     notifyListeners();
   }
