@@ -14,7 +14,7 @@ class _ListTaskState extends State<ListTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Lista de Personagens'), titleTextStyle: const TextStyle(fontSize: 17), actions: [
+      appBar: AppBar(title: const Text('Lista de Tarefas'), titleTextStyle: const TextStyle(fontSize: 17), actions: [
         IconButton(
             onPressed: () {
               //Navigator.of(context).popAndPushNamed(AppRoutes.characterSheetScreen);
