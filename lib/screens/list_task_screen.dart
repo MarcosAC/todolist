@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/provider/task_provider.dart';
+import 'package:todolist/provider/weather_provider.dart';
 import 'package:todolist/screens/task_form_screen.dart';
 import 'package:todolist/utils/routes/app_routes.dart';
 
@@ -45,6 +46,24 @@ class _ListTaskScreen extends State<ListTaskScreen> {
                                             children: [
                                               Text(tasks.taskByIndex(index).date),
                                               Text(tasks.taskByIndex(index).time),
+                                              Consumer<WeatherProvider>(
+                                                builder: (context, weatherProvider, _) {
+                                                  DateTime date = DateTime.now();
+                                                  double latitude = -20.7546;
+                                                  double longitude = -42.8825;
+                                                  weatherProvider.fetchWeather(date, latitude, longitude);
+
+                                                  if (weatherProvider.weather == null) {
+                                                    return const Text('Nenhum dado de clima disponível');
+                                                  }
+                                                  return Column(
+                                                    children: [
+                                                      Text('Condição: ${weatherProvider.weather!.description}'),
+                                                      Text('Temperatura: ${weatherProvider.weather!.temperature?.round()}°C'),
+                                                    ],
+                                                  );
+                                                },
+                                              ),
                                             ],
                                           ),
                                           trailing: IconButton(

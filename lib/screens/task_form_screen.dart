@@ -40,6 +40,7 @@ class _TaskFormScreen extends State<TaskFormScreen> {
     });
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text("Adicionar Tarefa"),
         titleTextStyle: const TextStyle(fontSize: 17),
@@ -119,62 +120,69 @@ class _TaskFormScreen extends State<TaskFormScreen> {
               icon: const Icon(Icons.list)),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: _titleController,
-              decoration: const InputDecoration(
-                label: Text("Tarefa"),
-                contentPadding: EdgeInsets.all(10),
-                border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextField(
+                controller: _titleController,
+                decoration: const InputDecoration(
+                  label: Text("Tarefa"),
+                  contentPadding: EdgeInsets.all(10),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
+                ),
               ),
-            ),
-            const SizedBox(height: 15),
-            TextField(
-              controller: _dateController,
-              decoration: const InputDecoration(
-                labelText: "Data",
-                contentPadding: EdgeInsets.all(10),
-                border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
+              const SizedBox(height: 15),
+              TextField(
+                controller: _dateController,
+                decoration: const InputDecoration(
+                  labelText: "Data",
+                  contentPadding: EdgeInsets.all(10),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
+                ),
               ),
-            ),
-            const SizedBox(height: 15),
-            TextField(
-              controller: _timeController,
-              decoration: const InputDecoration(
-                label: Text("Hora"),
-                contentPadding: EdgeInsets.all(10),
-                border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
+              const SizedBox(height: 15),
+              TextField(
+                controller: _timeController,
+                decoration: const InputDecoration(
+                  label: Text("Hora"),
+                  contentPadding: EdgeInsets.all(10),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
+                ),
               ),
-            ),
-            const SizedBox(height: 15),
-            const Divider(thickness: 2),
-            ElevatedButton(
-                onPressed: () {
+              //const SizedBox(height: 15),
+              //const Divider(thickness: 2),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       DateTime date = DateTime.now();
+              //       double latitude = -20.7546;
+              //       double longitude = -42.8825;
+              //       weatherProvider.fetchWeather(date, latitude, longitude);
+              //     },
+              //     child: const Text("Adicionar Tarefa")),
+              const SizedBox(height: 20),
+              Consumer<WeatherProvider>(
+                builder: (context, weatherProvider, _) {
                   DateTime date = DateTime.now();
                   double latitude = -20.7546;
                   double longitude = -42.8825;
                   weatherProvider.fetchWeather(date, latitude, longitude);
+
+                  if (weatherProvider.weather == null) {
+                    return const Text('Nenhum dado de clima disponível');
+                  }
+                  return Column(
+                    children: [
+                      Text('Condição: ${weatherProvider.weather!.description}'),
+                      Text('Temperatura: ${weatherProvider.weather!.temperature?.round()}°C'),
+                    ],
+                  );
                 },
-                child: const Text("Adicionar Tarefa")),
-            const SizedBox(height: 20),
-            Consumer<WeatherProvider>(
-              builder: (context, weatherProvider, _) {
-                if (weatherProvider.weather == null) {
-                  return const Text('Nenhum dado de clima disponível');
-                }
-                return Column(
-                  children: [
-                    Text('Condição: ${weatherProvider.weather!.description}'),
-                    Text('Temperatura: ${weatherProvider.weather!.temperature?.round()}°C'),
-                  ],
-                );
-              },
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
