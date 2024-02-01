@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/provider/task_provider.dart';
+import 'package:todolist/provider/weather_provider.dart';
 import 'package:todolist/screens/list_task_screen.dart';
 import 'package:todolist/screens/task_form_screen.dart';
+import 'package:todolist/services/weather_service.dart';
 import 'package:todolist/utils/routes/app_routes.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final WeatherService weatherService = WeatherService(apiKey: "de8f1c2567a1f497d34639f0a85443c2");
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => TaskProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => TaskProvider()),
+        ChangeNotifierProvider(create: (_) => WeatherProvider(weatherService)),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

@@ -3,6 +3,7 @@ import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/models/task.dart';
 import 'package:todolist/provider/task_provider.dart';
+import 'package:todolist/provider/weather_provider.dart';
 import 'package:todolist/services/weather_service.dart';
 import 'package:todolist/utils/routes/app_routes.dart';
 
@@ -17,7 +18,7 @@ class TaskFormScreen extends StatefulWidget {
 
 class _TaskFormScreen extends State<TaskFormScreen> {
   final WeatherService _weatherService = WeatherService(apiKey: "de8f1c2567a1f497d34639f0a85443c2");
-  
+
   final _titleController = TextEditingController();
   final _dateController = MaskedTextController(mask: "00/00/0000");
   final _timeController = MaskedTextController(mask: "00:00");
@@ -26,6 +27,8 @@ class _TaskFormScreen extends State<TaskFormScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final WeatherProvider weatherProvider = Provider.of<WeatherProvider>(context);
+
     setState(() {
       if (widget.task != null) {
         isEdit = true;
@@ -151,16 +154,32 @@ class _TaskFormScreen extends State<TaskFormScreen> {
               ),
             ),
             const SizedBox(height: 15),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       Task newTask = Task(
-            //         title: _titleController.text,
-            //         date: DateTime.now(),
-            //         time: TimeOfDay.fromDateTime(DateTime.now()),
-            //       );
-            //       Provider.of<TaskProvider>(context, listen: false).addTask(newTask);
-            //     },
-            //     child: const Text("Adicionar Tarefa")),
+            const Divider(thickness: 2),
+            ElevatedButton(
+                onPressed: () {
+                  DateTime date = DateTime.now();
+                  double latitude = 37.7749;
+                  double longitude = -122.4194;
+                  //_weatherService.getWeather(data, latitude, longitude);
+                  //Provider.of<WeatherProvider>(context, listen: false).fetchWeather(date, latitude, longitude);
+                  weatherProvider.fetchWeather(date, latitude, longitude);
+                },
+                child: const Text("Adicionar Tarefa")),
+            const SizedBox(height: 20),
+            Consumer<WeatherProvider>(
+              builder: (context, weatherProvider, _) {
+                if (weatherProvider.weather == null) {
+                  return const Text('Nenhum dado de clima disponível');
+                }
+
+                return Column(
+                  children: [
+                    Text('Condição: ${weatherProvider.weather!.condition}'),
+                    Text('Temperatura: ${weatherProvider.weather!.temperature}°C'),
+                  ],
+                );
+              },
+            ),
           ],
         ),
       ),

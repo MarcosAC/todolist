@@ -11,9 +11,11 @@ class WeatherService {
   WeatherService({required this.apiKey});
 
   Future<Weather> getWeather(DateTime dateTime, double latitude, double longitude) async {
-    final formattedDateTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTime);
+    final formattedDateTime = DateFormat('yyyyMMdd').format(dateTime);
 
-    final url = '$baseUrl?lat=$latitude&lon=$longitude&dt=$formattedDateTime&appid=$apiKey';
+    String date = formattedDateTime.toString();
+
+    final url = '$baseUrl?lat=$latitude&lon=$longitude&dt=$date&appid=$apiKey';
 
     final response = await http.get(Uri.parse(url));
 
