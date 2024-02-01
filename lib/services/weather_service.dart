@@ -15,7 +15,7 @@ class WeatherService {
 
     String date = formattedDateTime.toString();
 
-    final url = '$baseUrl?lat=$latitude&lon=$longitude&dt=$date&appid=$apiKey';
+    final url = '$baseUrl?lat=$latitude&lon=$longitude&dt=$date&appid=$apiKey&lang=pt_br&units=metric';
 
     final response = await http.get(Uri.parse(url));
 

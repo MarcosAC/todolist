@@ -1,20 +1,20 @@
 class Weather {
-  String? condition;
+  String? description;
   double? temperature;
 
   Weather({
-    required this.condition,
+    required this.description,
     required this.temperature,
   });
 
   Weather.fromJson(Map<String, dynamic> json) {
-    condition = json['weather'][0]['main'];
+    description = json['weather'][0]['description'];
     temperature = json['main']['temp'].toDouble();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['condition'] = condition;
+    data['description'] = description;
     data['temperature'] = temperature;
     return data;
   }

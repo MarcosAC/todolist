@@ -36,7 +36,7 @@ class _TaskFormScreen extends State<TaskFormScreen> {
         _titleController.text = widget.task!.title;
         _dateController.text = widget.task!.date;
         _timeController.text = widget.task!.time;
-      } // else {}
+      }
     });
 
     return Scaffold(
@@ -46,9 +46,6 @@ class _TaskFormScreen extends State<TaskFormScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                // DateTime date = DateFormat('dd/MM/yyyy').parse(_dateController.text);
-                // TimeOfDay time = TimeOfDay.fromDateTime(DateFormat('HH:mm').parse(_timeController.text));
-
                 Task newTask = Task(
                   id: widget.task?.id,
                   title: _titleController.text,
@@ -158,10 +155,8 @@ class _TaskFormScreen extends State<TaskFormScreen> {
             ElevatedButton(
                 onPressed: () {
                   DateTime date = DateTime.now();
-                  double latitude = 37.7749;
-                  double longitude = -122.4194;
-                  //_weatherService.getWeather(data, latitude, longitude);
-                  //Provider.of<WeatherProvider>(context, listen: false).fetchWeather(date, latitude, longitude);
+                  double latitude = -20.7546;
+                  double longitude = -42.8825;
                   weatherProvider.fetchWeather(date, latitude, longitude);
                 },
                 child: const Text("Adicionar Tarefa")),
@@ -171,11 +166,10 @@ class _TaskFormScreen extends State<TaskFormScreen> {
                 if (weatherProvider.weather == null) {
                   return const Text('Nenhum dado de clima disponível');
                 }
-
                 return Column(
                   children: [
-                    Text('Condição: ${weatherProvider.weather!.condition}'),
-                    Text('Temperatura: ${weatherProvider.weather!.temperature}°C'),
+                    Text('Condição: ${weatherProvider.weather!.description}'),
+                    Text('Temperatura: ${weatherProvider.weather!.temperature?.round()}°C'),
                   ],
                 );
               },
