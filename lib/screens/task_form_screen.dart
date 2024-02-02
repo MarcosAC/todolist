@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:todolist/models/task.dart';
 import 'package:todolist/provider/task_provider.dart';
 import 'package:todolist/provider/weather_provider.dart';
-import 'package:todolist/services/weather_service.dart';
 import 'package:todolist/utils/routes/app_routes.dart';
 
 class TaskFormScreen extends StatefulWidget {
@@ -17,8 +16,6 @@ class TaskFormScreen extends StatefulWidget {
 }
 
 class _TaskFormScreen extends State<TaskFormScreen> {
-  final WeatherService _weatherService = WeatherService(apiKey: "de8f1c2567a1f497d34639f0a85443c2");
-
   final _titleController = TextEditingController();
   final _dateController = MaskedTextController(mask: "00/00/0000");
   final _timeController = MaskedTextController(mask: "00:00");
@@ -28,6 +25,8 @@ class _TaskFormScreen extends State<TaskFormScreen> {
   @override
   Widget build(BuildContext context) {
     final WeatherProvider weatherProvider = Provider.of<WeatherProvider>(context);
+
+    final String? description = weatherProvider.weather!.description;
 
     setState(() {
       if (widget.task != null) {
@@ -159,10 +158,7 @@ class _TaskFormScreen extends State<TaskFormScreen> {
                 children: [
                   Text('Condição: ${weatherProvider.weather!.description}'),
                   Text('Temperatura: ${weatherProvider.weather!.temperature?.round()}°C'),
-                  const Icon(
-                    Icons.beach_access,
-                    size: 200,
-                  ),
+                  customIcon(description!),
                 ],
               )
             ],
@@ -170,5 +166,21 @@ class _TaskFormScreen extends State<TaskFormScreen> {
         ),
       ),
     );
+  }
+
+  Widget customIcon(String description) {
+    if (description == "nublado") {
+      return const Icon(
+        Icons.beach_access,
+        color: Colors.blue,
+        size: 200,
+      );
+    } else {
+      return const Icon(
+        Icons.sunny,
+        color: Colors.amber,
+        size: 200,
+      );
+    }
   }
 }
