@@ -19,7 +19,7 @@ class TaskFormScreen extends StatefulWidget {
 class _TaskFormScreen extends State<TaskFormScreen> {
   final WeatherService _weatherService = WeatherService(apiKey: "de8f1c2567a1f497d34639f0a85443c2");
 
-  final _titleController = TextEditingController();
+  final _titleController = TextEditingController(); 
   final _dateController = MaskedTextController(mask: "00/00/0000");
   final _timeController = MaskedTextController(mask: "00:00");
 
@@ -120,11 +120,11 @@ class _TaskFormScreen extends State<TaskFormScreen> {
               icon: const Icon(Icons.list)),
         ],
       ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          padding: const EdgeInsets.all(15.0),
+          child: ListView(
+            //crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TextField(
                 controller: _titleController,
@@ -152,17 +152,17 @@ class _TaskFormScreen extends State<TaskFormScreen> {
                   border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(5))),
                 ),
               ),
-              //const SizedBox(height: 15),
-              //const Divider(thickness: 2),
-              // ElevatedButton(
-              //     onPressed: () {
-              //       DateTime date = DateTime.now();
-              //       double latitude = -20.7546;
-              //       double longitude = -42.8825;
-              //       weatherProvider.fetchWeather(date, latitude, longitude);
-              //     },
-              //     child: const Text("Adicionar Tarefa")),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
+              const Divider(thickness: 2),
+              ElevatedButton(
+                  onPressed: () {
+                    DateTime date = DateTime.now();
+                    double latitude = -20.7546;
+                    double longitude = -42.8825;
+                    weatherProvider.fetchWeather(date, latitude, longitude);
+                  },
+                  child: const Text("Adicionar Tarefa")),
+              //const SizedBox(height: 20),
               Consumer<WeatherProvider>(
                 builder: (context, weatherProvider, _) {
                   DateTime date = DateTime.now();
