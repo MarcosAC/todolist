@@ -4,6 +4,7 @@ import 'package:todolist/provider/task_provider.dart';
 import 'package:todolist/provider/weather_provider.dart';
 import 'package:todolist/screens/task_form_screen.dart';
 import 'package:todolist/utils/routes/app_routes.dart';
+import 'package:todolist/widgets/weather_icon.dart';
 
 class ListTaskScreen extends StatefulWidget {
   const ListTaskScreen({super.key});
@@ -46,7 +47,7 @@ class _ListTaskScreen extends State<ListTaskScreen> {
                                         child: ListTile(
                                             leading: CircleAvatar(
                                               backgroundColor: Colors.transparent,
-                                              child: customIcon(weatherProvider.weather?.description),
+                                              child: WeatherIcon(description: weatherProvider.weather?.description),
                                             ),
                                             title: Text(tasks.taskByIndex(index).title),
                                             subtitle: Column(
@@ -110,20 +111,5 @@ class _ListTaskScreen extends State<ListTaskScreen> {
         ],
       ),
     );
-  }
-
-  Widget customIcon(String? description) {
-    if (description == "nublado") {
-      return const Icon(
-        Icons.beach_access,
-        color: Colors.blue,
-      );
-    } else {
-      return const Icon(
-        Icons.sunny,
-        color: Colors.amber,
-        size: 200,
-      );
-    }
   }
 }

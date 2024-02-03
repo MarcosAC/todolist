@@ -5,6 +5,7 @@ import 'package:todolist/models/task.dart';
 import 'package:todolist/provider/task_provider.dart';
 import 'package:todolist/provider/weather_provider.dart';
 import 'package:todolist/utils/routes/app_routes.dart';
+import 'package:todolist/widgets/weather_icon.dart';
 
 class TaskFormScreen extends StatefulWidget {
   const TaskFormScreen({super.key, this.task});
@@ -166,7 +167,7 @@ class _TaskFormScreen extends State<TaskFormScreen> {
                     children: [
                       Text('Condição: ${weatherProvider.weather?.description}', style: const TextStyle(fontSize: 18)),
                       Text('Temperatura: ${weatherProvider.weather?.temperature?.round()}°C', style: const TextStyle(fontSize: 18)),
-                      customIcon(weatherProvider.weather?.description),
+                      WeatherIcon(description: weatherProvider.weather?.description, sizeIcon: 200),
                     ],
                   ),
                 ),
@@ -176,21 +177,5 @@ class _TaskFormScreen extends State<TaskFormScreen> {
         ),
       ),
     );
-  }
-
-  Widget customIcon(String? description) {
-    if (description == "nublado") {
-      return const Icon(
-        Icons.beach_access,
-        color: Colors.blue,
-        size: 200,
-      );
-    } else {
-      return const Icon(
-        Icons.sunny,
-        color: Colors.amber,
-        size: 200,
-      );
-    }
   }
 }
