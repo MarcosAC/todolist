@@ -25,8 +25,7 @@ class _TaskFormScreen extends State<TaskFormScreen> {
   @override
   Widget build(BuildContext context) {
     final WeatherProvider weatherProvider = Provider.of<WeatherProvider>(context);
-
-    final String? description = weatherProvider.weather!.description;
+    //final String? description = weatherProvider.weather?.description;
 
     setState(() {
       if (widget.task != null) {
@@ -123,6 +122,7 @@ class _TaskFormScreen extends State<TaskFormScreen> {
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextField(
                 controller: _titleController,
@@ -153,14 +153,25 @@ class _TaskFormScreen extends State<TaskFormScreen> {
               const SizedBox(height: 15),
               const Divider(thickness: 2),
               const SizedBox(height: 15),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Condição: ${weatherProvider.weather!.description}'),
-                  Text('Temperatura: ${weatherProvider.weather!.temperature?.round()}°C'),
-                  customIcon(description!),
-                ],
-              )
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('Condição: ${weatherProvider.weather?.description}', style: const TextStyle(fontSize: 18)),
+                      Text('Temperatura: ${weatherProvider.weather?.temperature?.round()}°C', style: const TextStyle(fontSize: 18)),
+                      customIcon(weatherProvider.weather?.description),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -168,7 +179,7 @@ class _TaskFormScreen extends State<TaskFormScreen> {
     );
   }
 
-  Widget customIcon(String description) {
+  Widget customIcon(String? description) {
     if (description == "nublado") {
       return const Icon(
         Icons.beach_access,
