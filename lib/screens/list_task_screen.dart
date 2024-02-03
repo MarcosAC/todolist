@@ -42,16 +42,12 @@ class _ListTaskScreen extends State<ListTaskScreen> {
                                     double latitude = -20.7546;
                                     double longitude = -42.8825;
                                     weatherProvider.fetchWeather(date, latitude, longitude);
-                                    // if (weatherProvider.weather == null) {
-                                    //   return const Text('Nenhum dado de clima disponível');
-                                    // }
                                     return Card(
                                         child: ListTile(
                                             leading: CircleAvatar(
                                               backgroundColor: Colors.transparent,
                                               child: customIcon(weatherProvider.weather?.description),
                                             ),
-                                            //const CircleAvatar(child: Text('P')),
                                             title: Text(tasks.taskByIndex(index).title),
                                             subtitle: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,25 +55,6 @@ class _ListTaskScreen extends State<ListTaskScreen> {
                                                 Text(tasks.taskByIndex(index).date),
                                                 Text(tasks.taskByIndex(index).time),
                                                 Text('Condição: ${weatherProvider.weather?.description}'),
-                                                //Text('Temperatura: ${weatherProvider.weather?.temperature!.round()}°C'),
-                                                // Consumer<WeatherProvider>(
-                                                //   builder: (context, weatherProvider, _) {
-                                                //     DateTime date = DateTime.now();
-                                                //     double latitude = -20.7546;
-                                                //     double longitude = -42.8825;
-                                                //     weatherProvider.fetchWeather(date, latitude, longitude);
-
-                                                //     if (weatherProvider.weather == null) {
-                                                //       return const Text('Nenhum dado de clima disponível');
-                                                //     }
-                                                //     return Column(
-                                                //       children: [
-                                                //         Text('Condição: ${weatherProvider.weather!.description}'),
-                                                //         Text('Temperatura: ${weatherProvider.weather!.temperature!.round()}°C'),
-                                                //       ],
-                                                //     );
-                                                //   },
-                                                // ),
                                               ],
                                             ),
                                             trailing: IconButton(
@@ -140,7 +117,6 @@ class _ListTaskScreen extends State<ListTaskScreen> {
       return const Icon(
         Icons.beach_access,
         color: Colors.blue,
-        //size: 200,
       );
     } else {
       return const Icon(

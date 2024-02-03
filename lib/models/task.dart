@@ -3,19 +3,13 @@ class Task {
   final String title;
   final String date;
   final String time;
-  // final DateTime date;
-  // final TimeOfDay time;
-  //Weather? weather;
 
-  Task({this.id, required this.title, required this.date, required this.time /*, this.weather*/});
-
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     'title': title,
-  //     'date': _formatDate(date),
-  //     'time': '${time.hour}:${time.minute}',
-  //   };
-  // }
+  Task({
+    this.id,
+    required this.title,
+    required this.date,
+    required this.time,
+  });
 
   Map<String, dynamic> toMap() {
     return {
@@ -24,8 +18,4 @@ class Task {
       'time': time,
     };
   }
-
-  // String _formatDate(DateTime dateTime) {
-  //   return '${dateTime.year}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.day.toString().padLeft(2, '0')}';
-  // }
 }

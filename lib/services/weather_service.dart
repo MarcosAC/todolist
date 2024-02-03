@@ -6,7 +6,7 @@ import 'package:todolist/models/weather.dart';
 
 class WeatherService {
   final String apiKey;
-  final String baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
+  final String baseUrl = "https://api.openweathermap.org/data/2.5/weather";
 
   WeatherService({required this.apiKey});
 
@@ -15,7 +15,7 @@ class WeatherService {
 
     String date = formattedDateTime.toString();
 
-    final url = '$baseUrl?lat=$latitude&lon=$longitude&dt=$date&appid=$apiKey&lang=pt_br&units=metric';
+    final url = "$baseUrl?lat=$latitude&lon=$longitude&dt=$date&appid=$apiKey&lang=pt_br&units=metric";
 
     final response = await http.get(Uri.parse(url));
 
@@ -23,8 +23,7 @@ class WeatherService {
       final Map<String, dynamic> data = json.decode(response.body);
       return Weather.fromJson(data);
     } else {
-      throw Exception('Failed to load weather data');
+      throw Exception("Falha ao carregar dados do clima");
     }
   }
-  //de8f1c2567a1f497d34639f0a85443c2
 }

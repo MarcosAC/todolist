@@ -25,7 +25,6 @@ class _TaskFormScreen extends State<TaskFormScreen> {
   @override
   Widget build(BuildContext context) {
     final WeatherProvider weatherProvider = Provider.of<WeatherProvider>(context);
-    //final String? description = weatherProvider.weather?.description;
 
     setState(() {
       if (widget.task != null) {

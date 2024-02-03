@@ -15,7 +15,7 @@ class WeatherProvider with ChangeNotifier {
       _weather = await _weatherService.getWeather(dateTime, latitude, longitude);
       notifyListeners();
     } catch (e) {
-      print('Erro ao obter dados do clima: $e');
+      throw Exception("Erro ao obter dados do clima: $e");
     }
   }
 }
