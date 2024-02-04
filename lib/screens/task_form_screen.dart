@@ -34,6 +34,12 @@ class _TaskFormScreen extends State<TaskFormScreen> {
         _titleController.text = widget.task!.title;
         _dateController.text = widget.task!.date;
         _timeController.text = widget.task!.time;
+      } else {
+        DateTime date = DateTime.now();
+        double latitude = -20.7546;
+        double longitude = -42.8825;
+
+        weatherProvider.fetchWeather(date, latitude, longitude);
       }
     });
 
@@ -162,14 +168,16 @@ class _TaskFormScreen extends State<TaskFormScreen> {
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Condição: ${weatherProvider.weather?.description}', style: const TextStyle(fontSize: 18)),
-                      Text('Temperatura: ${weatherProvider.weather?.temperature?.round()}°C', style: const TextStyle(fontSize: 18)),
-                      WeatherIcon(description: weatherProvider.weather?.description, sizeIcon: 200),
-                    ],
-                  ),
+                  child: weatherProvider.weather == null
+                      ? const Center(child: CircularProgressIndicator())
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text('Condição: ${weatherProvider.weather?.description}', style: const TextStyle(fontSize: 18)),
+                            Text('Temperatura: ${weatherProvider.weather?.temperature?.round()}°C', style: const TextStyle(fontSize: 18)),
+                            WeatherIcon(description: weatherProvider.weather?.description, sizeIcon: 200),
+                          ],
+                        ),
                 ),
               ),
             ],
