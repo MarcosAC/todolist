@@ -21,6 +21,12 @@ class WeatherIcon extends StatelessWidget {
           color: Colors.amber,
           size: sizeIcon,
         );
+      case "chuva moderada":
+        return Icon(
+          Icons.beach_access,
+          color: Colors.blue,
+          size: sizeIcon,
+        );
       default:
         return const CircularProgressIndicator();
     }
