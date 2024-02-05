@@ -14,7 +14,7 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final WeatherService weatherService = WeatherService(apiKey: "de8f1c2567a1f497d34639f0a85443c2");
+  final WeatherService weatherService = WeatherService(apiKey: "");
 
   @override
   Widget build(BuildContext context) {
